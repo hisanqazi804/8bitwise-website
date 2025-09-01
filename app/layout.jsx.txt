@@ -1,0 +1,11 @@
+// This is the root layout that applies to all pages
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {/* The `children` prop will be your `page.jsx` component */}
+        {children}
+      </body>
+    </html>
+  );
+}
