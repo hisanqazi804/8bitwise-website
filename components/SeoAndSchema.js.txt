@@ -1,0 +1,8 @@
+export default function SeoAndSchema() {
+  return (
+    <>
+      <title>My Agency - Home</title>
+      <meta name="description" content="Welcome to my agency website" />
+    </>
+  )
+}

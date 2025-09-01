@@ -1,0 +1,7 @@
+export default function Header() {
+  return (
+    <header style={{ padding: "20px", background: "#f4f4f4" }}>
+      <h1>My Agency App</h1>
+    </header>
+  )
+}
