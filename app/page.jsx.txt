@@ -5,8 +5,6 @@ import { ChevronDown, Menu, X, CheckCircle, Search, Mail, Phone, MapPin, Linkedi
 
 // --- SEO & STRUCTURED DATA COMPONENT ---
 const SeoAndSchema = ({ pageTitle }) => {
-    // In a real Next.js app, you'd use the Metadata API in your layout or page.
-    // This is a simulation for a single-file component structure.
     useEffect(() => {
         const fullTitle = `${pageTitle} | 8bitwise - Digital Marketing & SEO Agency`;
         document.title = fullTitle;
@@ -20,9 +18,7 @@ const SeoAndSchema = ({ pageTitle }) => {
         }
         metaDesc.setAttribute("content", description);
     }, [pageTitle]);
-
-    // JSON-LD Schema would also be handled differently, but included for completeness
-    return null; // No visible output
+    return null;
 };
 
 
@@ -82,21 +78,6 @@ const useScrollAnimation = () => {
 
 const AnimatedSection = ({ children, className = '' }) => {
     const ref = useScrollAnimation();
-    // Adding a basic animation style inline for simplicity, this should be in globals.css
-    useEffect(() => {
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes fadeInUp {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fade-in-up {
-                animation: fadeInUp 0.8s ease-out forwards;
-            }
-        `;
-        document.head.appendChild(style);
-        return () => { document.head.removeChild(style); };
-    }, []);
     return <section ref={ref} className={`opacity-0 ${className}`}>{children}</section>;
 };
 
@@ -122,7 +103,7 @@ const Header = ({ navigateTo, currentPage, theme, toggleTheme }) => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-20">
                     <div className="flex-shrink-0">
-                         <a href="#" onClick={() => handleNavClick("Home")} className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                         <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick("Home"); }} className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
                             <svg className="w-8 h-8 mr-2 text-indigo-600 dark:text-indigo-500" viewBox="0 0 100 100" fill="currentColor">
                                 <rect width="20" height="100" x="0" y="0"></rect><rect width="20" height="20" x="20" y="0"></rect><rect width="20" height="20" x="40" y="0"></rect><rect width="20" height="20" x="20" y="40"></rect><rect width="20" height="20" x="40" y="40"></rect><rect width="20" height="20" x="60" y="40"></rect><rect width="20" height="20" x="80" y="40"></rect><rect width="20" height="20" x="20" y="80"></rect><rect width="20" height="20" x="40" y="80"></rect>
                             </svg>
@@ -473,7 +454,6 @@ const ContactPage = () => {
         e.preventDefault();
         setStatus({ loading: true, error: null, success: null });
         // NOTE: This form submission is for front-end demonstration only.
-        // It does not connect to a real backend in this single-file setup.
         setTimeout(() => {
             if (formData.email.includes("error")) {
                  setStatus({ loading: false, error: "This is a simulated error message.", success: null });
@@ -547,17 +527,27 @@ const PlaceholderPage = ({ title }) => (
     </>
 );
 
-// --- MAIN APP COMPONENT (Router) ---
-export default function Home() { // Renamed to Home for Next.js convention
+// --- MAIN APP COMPONENT ---
+// The main component MUST be a default export for Next.js to recognize it.
+export default function App() {
     const [currentPage, setCurrentPage] = useState('Home');
     const [theme, setTheme] = useState('dark');
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
             } else {
                 document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
             }
         }
     }, [theme]);
