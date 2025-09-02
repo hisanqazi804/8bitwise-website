@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ChevronDown, Menu, X, CheckCircle, Search, Mail, Phone, MapPin, Linkedin, Facebook, Twitter, Sun, Moon, Briefcase, Target, PenTool, TrendingUp } from 'lucide-react';
 
+// --- SEO COMPONENT ---
 const Seo = ({ pageTitle }) => {
     useEffect(() => {
         document.title = `${pageTitle} | 8bitwise - Digital Marketing & SEO Agency`;
@@ -11,6 +12,7 @@ const Seo = ({ pageTitle }) => {
     return null;
 };
 
+// --- CONTENT & ICONS ---
 const NAV_LINKS = ["Home", "About Us", "Services", "Case Studies", "Contact Us"];
 
 const SERVICES = [
